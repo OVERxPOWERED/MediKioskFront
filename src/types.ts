@@ -55,6 +55,43 @@ export type ScreenId =
   | '43_SESSION_COMPLETE'
   | '44_RESET';
 
+export type Language = 'hi' | 'en' | 'hinglish';
+
+export enum SessionState {
+  Welcome = 'welcome',
+  Registration = 'registration',
+  Vitals = 'vitals',
+  Documents = 'documents',
+  ChiefComplaint = 'chiefComplaint',
+  Completion = 'completion',
+}
+
+export interface Vitals {
+  bp: string;
+  pulse: string;
+  spo2: string;
+  temperature: string;
+  height: string;
+  weight: string;
+  bmi: string;
+}
+
+export interface ScannedDocItem {
+  docType: string;
+  date: string;
+  signatory: string;
+  impression: string;
+  medications: string[];
+  investigations: string[];
+}
+
+export interface QueueTokenResponse {
+  token: string;
+  estimatedWaitTime: number;
+  queuePosition: number;
+  department: string;
+}
+
 export interface PatientVitals {
   bp: string;
   bpSource: string;
@@ -78,7 +115,7 @@ export interface RedFlagItem {
   badgeType?: 'red' | 'amber';
 }
 
-export interface ScannedDocItem {
+export interface ScannedDocItemLegacy {
   docId: string;
   docType: string;
   subtitle: string;
@@ -100,9 +137,12 @@ export interface PatientData {
   token: string;
   chiefComplaint: string;
   hpi: string;
+  language: Language;
   allergies?: string;
-  vitals: PatientVitals;
+  vitals: Vitals;
   ayush: AyushAssessment;
   redFlags: RedFlagItem[];
   documents?: ScannedDocItem[];
 }
+
+export type { ScreenId as LegacyScreenId } from './types';
